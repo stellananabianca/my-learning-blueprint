@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Architect's Blueprint: English Education Strategy</title>
+    <title>The Architect's Blueprint: English Education Strategy (UT)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
@@ -119,7 +119,7 @@
             <section class="text-center max-w-3xl mx-auto">
                 <h2 class="text-4xl font-serif font-bold text-stone-900 mb-4">Strategic Learning for English Education</h2>
                 <p class="text-lg text-stone-600 leading-relaxed">
-                    Welcome to your interactive curriculum guide. Click on any <strong>Course</strong> or <strong>Toolkit Item</strong> below to enter a detailed subpage with specific strategies and architectural insights.
+                    A comprehensive, academically sourced guide for the <strong>Universitas Terbuka (UT)</strong> English Education curriculum. Click any course to view its specific theoretical framework and learning strategy.
                 </p>
             </section>
 
@@ -384,120 +384,134 @@
         // --- ENHANCED CONTENT GENERATOR ---
         function getCourseDetails(course) {
             
-            // Define Specific Details for Key Courses
+            // Define Specific Details for Key Courses (Aligned with UT English Education Curriculum)
             const detailsMap = {
                 // SEMESTER 1
                 'SPBI4102': { // Intensive Reading
                     essence: "Reading is not a passive activity; it is a complex cognitive reconstruction process. In this foundational course, you are moving away from 'translating every word' toward 'processing meaning chunks'.",
-                    description: "Intensive Reading focuses on short, complex texts to develop accuracy in comprehension. Unlike Extensive Reading (which emphasizes quantity), this course drills down into lexical precision, grammatical nuance, and the ability to identify the main idea versus supporting details. You will encounter academic paragraphs where understanding the connector words (however, furthermore, despite) is just as important as the nouns and verbs.",
-                    competencies: ["Identify main ideas and supporting details in academic texts.", "Deduce meaning of unfamiliar vocabulary using context clues.", "Analyze reference words (it, they, this) to track cohesion."],
+                    description: "This course focuses on **Intensive Reading** techniques essential for academic success. You will engage with short, dense texts (300-500 words) to develop micro-skills: identifying the *topic sentence*, distinguishing *main ideas* from *supporting details*, and understanding *cohesive devices* (reference, substitution, ellipsis). The goal is total accuracy in comprehension.",
+                    competencies: ["Identify main ideas and supporting details in academic paragraphs.", "Deduce meaning of unfamiliar vocabulary using context clues (synonyms, antonyms, morphology).", "Analyze reference words (it, they, this) to track cohesion."],
                     strategy: "<strong>The 'Role Reversal' Method:</strong> After reading a paragraph, cover it and try to write a one-sentence summary. If you can't summarize it, you didn't understand it. Also, highlight every cohesive device (therefore, however) to see the logic flow.",
-                    connection: "Foundation for: Critical Reading (Sem 2) and Extensive Reading (Sem 4)."
+                    connection: "Foundation for: Critical Reading (Sem 2) and Extensive Reading (Sem 4).",
+                    resources: ["Mikulecky, B. S., & Jeffries, L. (2007). *Advanced Reading Power*.", "UT Module SPBI4102 (Intensive Reading)."]
                 },
                 'SPBI4104': { // Verb Patterns
                     essence: "The verb is the engine of the sentence. If the noun is the driver, the verb pattern dictates where the car can go.",
-                    description: "This course goes beyond basic tenses. It explores the 'valency' of verbs—how many arguments a verb takes (transitive, intransitive, ditransitive). You will study why we say 'I enjoy swimming' (Gerund) but 'I want to swim' (Infinitive). This is the bridge between basic grammar and advanced syntax.",
-                    competencies: ["Distinguish between transitive, intransitive, and linking verbs.", "Correctly use gerunds and infinitives after specific verbs.", "Analyze complex verb phrases in authentic texts."],
+                    description: "This course explores **Valency Grammar** and the structural patterns of English verbs. Unlike basic tenses, this focuses on what *follows* the verb (the complementation). You will distinguish between patterns like [V + Object + Infinitive] (e.g., *I want him to go*) versus [V + Object + Base Form] (e.g., *I make him go*). It addresses common interference errors from Bahasa Indonesia.",
+                    competencies: ["Distinguish between transitive, intransitive, and ditransitive verb patterns.", "Correctly use gerunds and infinitives after specific verbs (e.g., enjoy doing vs. want to do).", "Analyze complex verb phrases in authentic texts."],
                     strategy: "<strong>Pattern Hunting:</strong> Do not just memorize lists. When reading, circle every verb and underline what follows it. Is it an object? A preposition? An infinitive? Create a personal 'Verb Dictionary' with these patterns.",
-                    connection: "Prerequisite for: Clause Complexes (Sem 2) and Morphology/Syntax (Sem 5)."
+                    connection: "Prerequisite for: Clause Complexes (Sem 2) and Morphology/Syntax (Sem 5).",
+                    resources: ["Hornby, A. S. (1975). *Guide to Patterns and Usage in English*.", "Quirk, R., & Greenbaum, S. (1973). *A University Grammar of English*."]
                 },
                 
                 // SEMESTER 2
                 'SPBI4107': { // Intro to Linguistics
                     essence: "The Periodic Table of Language. You are learning the atomic elements (sounds, words, sentence structures) that build every language.",
-                    description: "This is the 'Science' of your degree. You will strip language down to its components: Phonetics (sounds), Phonology (sound systems), Morphology (word parts), Syntax (sentence structure), Semantics (meaning), and Pragmatics (context). You will learn that language is arbitrary, systematic, and productive.",
+                    description: "This is the scientific study of language. You will survey the core sub-disciplines: **Phonetics & Phonology** (sounds/systems), **Morphology** (word formation), **Syntax** (sentence structure), **Semantics** (meaning), and **Pragmatics** (context). It establishes that language is arbitrary, systematic, and productive.",
                     competencies: ["Define the core sub-disciplines of linguistics.", "Transcribe simple English words using IPA (International Phonetic Alphabet).", "Identify morphemes (roots, prefixes, suffixes) in complex words."],
                     strategy: "<strong>The Feynman Technique:</strong> Do not just memorize 'phoneme'; explain how it differs from a 'phone' to a non-expert. Create a concept map linking Phonology -> Morphology -> Syntax.",
-                    connection: "Foundation for: Morphology (Sem 5), Syntax (Sem 5), and Sociolinguistics (Sem 5)."
+                    connection: "Foundation for: Morphology (Sem 5), Syntax (Sem 5), and Sociolinguistics (Sem 5).",
+                    resources: ["Fromkin, V., Rodman, R., & Hyams, N. (2018). *An Introduction to Language*.", "Yule, G. (2020). *The Study of Language*."]
                 },
                 'SPBI4110': { // Clause Complexes
                     essence: "From sentences to systems. Understanding how simple ideas combine to form complex thoughts.",
-                    description: "Likely based on Systemic Functional Linguistics (SFL), this course examines how clauses are linked via coordination (parataxis) and subordination (hypotaxis). You will analyze how 'I went to the store because I was hungry' differs functionally from 'I was hungry, so I went to the store.' It's about the logic of connection.",
-                    competencies: ["Identify independent and dependent clauses.", "Analyze the logical relationship between clauses (temporal, causal, additive).", "Construct complex sentences with varied subordination strategies."],
+                    description: "This course is grounded in **Systemic Functional Linguistics (SFL)**, specifically M.A.K. Halliday's framework. It examines how clauses combine through **Taxis** (Parataxis vs. Hypotaxis) and **Logico-Semantic Relations** (Expansion vs. Projection). You will analyze how a sentence like 'I went because I was hungry' (Hypotactic Enhancement) differs from 'I was hungry, so I went' (Paratactic Enhancement).",
+                    competencies: ["Distinguish between Parataxis (coordination) and Hypotaxis (subordination).", "Analyze logico-semantic relations: Elaboration, Extension, and Enhancement.", "Construct complex sentences with varied subordination strategies."],
                     strategy: "<strong>Deconstruction:</strong> Take an editorial from a newspaper. Highlight the conjunctions. Remove them. How does the meaning fall apart? Rebuild the sentence using different connectors.",
-                    connection: "Critical for: Academic Writing (Sem 7) and Translation (Sem 8)."
+                    connection: "Critical for: Academic Writing (Sem 7) and Translation (Sem 8).",
+                    resources: ["Halliday, M.A.K., & Matthiessen, C. (2014). *Halliday's Introduction to Functional Grammar* (Chapter 7: Clause Complexes).", "Gerot, L., & Wignell, P. (1994). *Making Sense of Functional Grammar*."]
                 },
 
                 // SEMESTER 3
                 'SPBI4201': { // Teaching Strategies
                     essence: "The Toolbox. Before you build the house (teach), you need to know what tools (strategies) exist.",
-                    description: "This course introduces the 'How' of teaching. You will survey major approaches: Grammar Translation Method (old school), Direct Method, Audio-Lingual Method (drills), and Communicative Language Teaching (CLT). You will learn that no single method is perfect; a good teacher is eclectic.",
-                    competencies: ["Compare and contrast major ELT methods.", "Select appropriate strategies for different age groups and proficiency levels.", "Critique the strengths and weaknesses of teacher-centered vs. student-centered learning."],
+                    description: "This course surveys the history and application of major ELT methodologies. You will critique the **Grammar Translation Method**, **Audio-Lingual Method** (Behaviorism), **Total Physical Response (TPR)**, and the dominant **Communicative Language Teaching (CLT)** approach. It emphasizes that there is no 'best' method (the Post-Method Condition).",
+                    competencies: ["Compare and contrast major ELT methods (GTM, ALM, CLT).", "Select appropriate strategies for different age groups and proficiency levels.", "Critique the strengths and weaknesses of teacher-centered vs. student-centered learning."],
                     strategy: "<strong>Simulation:</strong> When you read about 'Total Physical Response (TPR)', stand up and do it. Try to teach your roommate 5 words using only TPR. Theory must be embodied.",
-                    connection: "Prepares for: Method Development (Sem 4) and Micro Teaching (Sem 4)."
+                    connection: "Prepares for: Method Development (Sem 4) and Micro Teaching (Sem 4).",
+                    resources: ["Larsen-Freeman, D. (2000). *Techniques and Principles in Language Teaching*.", "Brown, H. D. (2007). *Teaching by Principles: An Interactive Approach to Language Pedagogy*."]
                 },
                 'SPBI4203': { // Essay Writing
                     essence: "Structured thinking. An essay is not just thoughts written down; it is an architectural argument.",
-                    description: "You will move from writing paragraphs to writing 5-paragraph essays. The focus is on the Thesis Statement—the single sentence that controls the entire essay. You will learn the structure of Introduction (Hook + Background + Thesis), Body Paragraphs (Topic Sentence + Evidence + Analysis), and Conclusion.",
+                    description: "This course transitions students from paragraph writing to the **5-Paragraph Essay** model. The core focus is on the **Thesis Statement**—the controlling idea of the entire text. You will practice the structure: Introduction (Hook + Background + Thesis), Body Paragraphs (Topic Sentence + Evidence + Analysis), and Conclusion.",
                     competencies: ["Formulate a clear, arguable thesis statement.", "Write unified and coherent body paragraphs.", "Use transition signals to maintain flow."],
                     strategy: "<strong>The Skeleton Method:</strong> Before writing a single full sentence, write the 'Skeleton': Thesis + 3 Topic Sentences. If this skeleton doesn't make sense, the body will fail.",
-                    connection: "Prerequisite for: Academic Writing (Sem 7) and Skripsi."
+                    connection: "Prerequisite for: Academic Writing (Sem 7) and Skripsi.",
+                    resources: ["Oshima, A., & Hogue, A. (2006). *Writing Academic English*.", "Zemach, D. E., & Rumisek, L. A. (2005). *Academic Writing: From Paragraph to Essay*."]
                 },
 
                 // SEMESTER 4 (The Heavy Phase)
                 'SPBI4212': { // Micro Teaching
                     essence: "The Flight Simulator. This is where theory meets reality. It is a safe space to crash and burn before you face real students.",
-                    description: "You will plan short lessons (15-20 mins) and teach them to your peers. The focus is not on the content, but on your performance: Board management, voice projection, checking for understanding (ICQs/CCQs), and giving instructions. It is nerve-wracking but essential.",
-                    competencies: ["Design a mini-lesson with clear objectives.", "Demonstrate effective classroom management skills.", "Use 'Teacher Talk' that is graded to the students' level."],
+                    description: "A practicum course where you plan and teach short lesson segments (15-20 mins) to peers. The focus is on specific teaching skills: **Set Induction** (opening), **Questioning Skills** (ICQs/CCQs), **Reinforcement**, and **Closure**. You will also practice **Classroom Management**.",
+                    competencies: ["Design a mini-lesson with clear objectives (ABCD model).", "Demonstrate effective classroom management skills.", "Use 'Teacher Talk' that is graded to the students' level."],
                     strategy: "<strong>Video Analysis:</strong> Record your sessions. Watch them twice: once with sound OFF to check body language/presence, once with sound ON to check instruction clarity.",
-                    connection: "Prepares for: PLP (Sem 6)."
+                    connection: "Prepares for: PLP (Sem 6).",
+                    resources: ["Brown, G. (1975). *Microteaching: A Programme of Teaching Skills*.", "UT Panduan Praktik PKM (Pemantapan Kemampuan Mengajar)."]
                 },
                 'SPBI4307': { // Research in ELT
                     essence: "The Scientist's Lens. Moving from 'I think this works' to 'I have evidence this works'.",
-                    description: "An introduction to research paradigms: Quantitative (numbers, statistics, generalizability) vs. Qualitative (words, interviews, depth). You will learn how to read a journal article, how to identify a 'Research Gap', and how to formulate a Research Question.",
-                    competencies: ["Distinguish between Quant and Qual research.", "Formulate a valid research question.", "Conduct a basic literature review."],
+                    description: "An introduction to research paradigms: **Quantitative** (Experimental, Survey) vs. **Qualitative** (Case Study, Ethnography, Classroom Action Research). You will learn to formulate a **Research Question**, conduct a **Literature Review**, and understand research ethics.",
+                    competencies: ["Distinguish between Quant and Qual research designs.", "Formulate a valid research question.", "Conduct a basic literature review."],
                     strategy: "<strong>The Abstract Breakdown:</strong> Read 5 abstracts a week. Identify: 1. The Problem, 2. The Method, 3. The Result. This trains you to see the structure of research.",
-                    connection: "Foundation for: Metode Penelitian (Sem 6) and Skripsi (Sem 7)."
+                    connection: "Foundation for: Metode Penelitian (Sem 6) and Skripsi (Sem 7).",
+                    resources: ["Creswell, J. W. (2012). *Educational Research: Planning, Conducting, and Evaluating Quantitative and Qualitative Research*.", "Nunan, D. (1992). *Research Methods in Language Learning*."]
                 },
 
                 // SEMESTER 5
                 'SPBI4301': { // Morphology & Syntax
                     essence: "The Engineering of English. Deep structure analysis.",
-                    description: "Morphology looks at word formation (derivation vs inflection). Syntax looks at sentence structure (Generative Grammar/Chomsky). You will learn to draw Tree Diagrams that visually represent the hierarchy of a sentence. This explains *why* sentences are ambiguous.",
-                    competencies: ["Analyze words into constituent morphemes.", "Draw syntactic tree diagrams for simple and complex sentences.", "Explain structural ambiguity (e.g., 'I saw the man with the telescope')."],
+                    description: "This course combines two levels of analysis. **Morphology** examines word formation processes (Affixation, Compounding, Blending) and types of morphemes (Free vs. Bound). **Syntax** introduces **Generative Grammar (Chomsky)**, focusing on Phrase Structure Rules and Tree Diagrams. You will analyze structural ambiguity (e.g., 'I saw the man with the telescope').",
+                    competencies: ["Analyze words into constituent morphemes (derivational vs. inflectional).", "Draw syntactic tree diagrams for simple and complex sentences.", "Explain structural ambiguity."],
                     strategy: "<strong>Tree Diagrams:</strong> Visual structures are easier to remember than rules. Diagram sentences from your *Extensive Reading* books. Don't just analyze textbook examples; analyze real world text.",
-                    connection: "Critical for: Explaining grammar rules to advanced students."
+                    connection: "Critical for: Explaining grammar rules to advanced students.",
+                    resources: ["Radford, A. (2009). *An Introduction to English Sentence Structure*.", "Lieber, R. (2009). *Introducing Morphology*."]
                 },
                 'SPBI4311': { // Sociolinguistics
                     essence: "Language in Society. Why do we speak differently to our boss vs. our friends?",
-                    description: "Language is not a vacuum. It is affected by Class, Gender, Age, and Region. You will study Dialects, Sociolects, Code-Switching (campur kode), and Diglossia. In the Indonesian context, this is crucial for understanding how students navigate Bahasa Indonesia, local languages, and English.",
-                    competencies: ["Define key sociolinguistic terms (dialect, register, idiolect).", "Analyze instances of code-switching in natural conversation.", "Discuss the relationship between language and power."],
+                    description: "Examines the relationship between language and society. Key topics include **Varieties of Language** (Dialects, Registers, Styles), **Bilingualism/Multilingualism**, **Code-Switching** vs. **Code-Mixing**, and **Diglossia**. Relevant to the Indonesian context where local languages, Bahasa Indonesia, and English coexist.",
+                    competencies: ["Define key sociolinguistic terms (dialect, register, idiolect).", "Analyze instances of code-switching in natural conversation.", "Discuss the relationship between language and power/gender."],
                     strategy: "<strong>Observation Journal:</strong> Listen to how people speak in the cafeteria vs. the classroom. Note the changes in vocabulary and tone. You are now a field linguist.",
-                    connection: "Relevant for: Intercultural Communication (Sem 8)."
+                    connection: "Relevant for: Intercultural Communication (Sem 8).",
+                    resources: ["Holmes, J. (2013). *An Introduction to Sociolinguistics*.", "Wardhaugh, R. (2006). *An Introduction to Sociolinguistics*."]
                 },
 
                 // SEMESTER 6
                 'SPBI4401': { // Interactive Language Teaching
                     essence: "The Facilitator. Moving from 'Teaching' to 'Learning'.",
-                    description: "This course focuses on interaction patterns: Teacher-Student (T-S), Student-Student (S-S), and Group Work. It emphasizes 'Task-Based Learning' (TBLT) where language is a tool to solve a problem, not just a subject to be memorized.",
-                    competencies: ["Design tasks that require genuine communication.", "Manage group dynamics and pair work effectively.", "Reduce TTT (Teacher Talking Time) and increase STT (Student Talking Time)."],
+                    description: "This course focuses on creating communication in the classroom. It emphasizes **Task-Based Learning (TBLT)** and **Cooperative Learning** principles. You will learn to design activities that require 'Information Gap', 'Reasoning Gap', or 'Opinion Gap' to force genuine interaction.",
+                    competencies: ["Design tasks that require genuine communication (Information Gap).", "Manage group dynamics and pair work effectively.", "Reduce TTT (Teacher Talking Time) and increase STT (Student Talking Time)."],
                     strategy: "<strong>Activity Audit:</strong> Look at a textbook activity. Ask: 'Is this interactive?' If not, how can I change it? (e.g., Turn a reading passage into a 'Jigsaw Reading' activity).",
-                    connection: "Direct application for: PLP (Sem 6)."
+                    connection: "Direct application for: PLP (Sem 6).",
+                    resources: ["Brown, H. D. (2001). *Teaching by Principles*.", "Richards, J. C. (2006). *Communicative Language Teaching Today*."]
                 },
 
                 // SEMESTER 7
                 'SPBI4402': { // Academic Writing
                     essence: "The Professional Scholar. Writing for the global community.",
-                    description: "This is the highest level of writing. You are not just writing for a grade; you are writing to participate in a discourse. You will learn citation styles (APA), avoiding plagiarism, hedging (using cautious language), and structuring a full research paper.",
+                    description: "Advanced writing for research purposes. You will learn to write a full **Research Proposal** or **Article**. Focus areas include: **Hedging** (cautious language), **Paraphrasing** to avoid plagiarism, using **APA Citation Style**, and structuring a Literature Review.",
                     competencies: ["Use APA style correctly for in-text citations and references.", "Paraphrase academic sources to avoid plagiarism.", "Construct a Literature Review synthesis."],
                     strategy: "<strong>Reverse Outlining:</strong> Take a published journal article. In the margins, write the main point of each paragraph. See how the author constructed their argument. Copy that structure.",
-                    connection: "Direct support for: Skripsi (Sem 7) and Artikel Ilmiah."
+                    connection: "Direct support for: Skripsi (Sem 7) and Artikel Ilmiah.",
+                    resources: ["Swales, J. M., & Feak, C. B. (2012). *Academic Writing for Graduate Students*.", "Publication Manual of the American Psychological Association (7th Ed)."]
                 },
                 'SPBI4470': { // Skripsi
                     essence: "The Capstone. Your contribution to the field of knowledge.",
-                    description: "The ultimate test of your degree. You will identify a problem in English Education, design a study to investigate it, collect data, analyze it, and write a 10,000+ word report. It is a marathon, not a sprint.",
+                    description: "The final research project. You will identify a problem in English Education, design a study, collect data, analyze it, and write a thesis. It demonstrates your ability to think scientifically and write academically.",
                     competencies: ["Conduct independent research.", "Analyze data using appropriate statistical or thematic methods.", "Defend research findings in an oral examination."],
                     strategy: "<strong>Zettelkasten:</strong> If you haven't started your note-taking system by now, start today. Do not wait for Sem 7. Every paper you read in Sem 4-6 is potential data for this.",
-                    connection: "Culmination of entire degree."
+                    connection: "Culmination of entire degree.",
+                    resources: ["Universitas Terbuka. *Panduan Penulisan Karya Ilmiah*."]
                 },
 
                 // SEMESTER 8
                 'SPBI4405': { // Second Language Acquisition (SLA)
                     essence: "The Psychology of Learning. How does the brain actually learn a new language?",
-                    description: "You will study theories like Krashen's Input Hypothesis (i+1), Vygotsky's Zone of Proximal Development (ZPD), and the Critical Period Hypothesis. You will understand *why* students make errors (Interlanguage) and why error correction doesn't always work.",
+                    description: "Examines theories of how L2 is acquired. Key concepts: **Krashen's Monitor Model** (Acquisition-Learning Hypothesis, Input Hypothesis i+1, Affective Filter), **Interlanguage** (Selinker), and **Vygotsky's ZPD**. It explains *why* students make errors and the role of corrective feedback.",
                     competencies: ["Explain the difference between Acquisition and Learning.", "Analyze learner errors using Interlanguage theory.", "Apply SLA theories to classroom teaching decisions."],
                     strategy: "<strong>Case Study:</strong> Pick a friend who is learning a language. Observe their mistakes. Don't correct them; analyze them. Are they 'developmental errors' or 'interference errors'?",
-                    connection: "Explains the 'Why' behind Teaching Methods."
+                    connection: "Explains the 'Why' behind Teaching Methods.",
+                    resources: ["Lightbown, P., & Spada, N. (2013). *How Languages are Learned*.", "Ellis, R. (1997). *Second Language Acquisition*."]
                 }
             };
 
@@ -506,56 +520,61 @@
                 return detailsMap[course.code];
             }
 
-            // FALLBACK: Detailed Category Generators
-            // If the specific course isn't in the map above, we generate a high-quality category description.
+            // FALLBACK: Detailed Category Generators (Standardized)
             switch (course.cat) {
                 case 'Skills':
                     return {
                         essence: "A gym for your brain. Proficiency and muscle memory.",
-                        description: "This course falls under 'Language Skills'. The goal here is distinct from 'content' courses. You aren't just learning *about* English; you are training your brain to process it automatically. In Reading/Listening, the focus is on increasing your 'lexical threshold' (vocabulary size) and processing speed. In Speaking/Writing, the focus is on accuracy (grammar) and fluency (speed/flow).",
+                        description: "These courses (Listening, Speaking, Reading, Writing) focus on the four language skills. The goal is proficiency (B2/C1 CEFR Level). Emphasis is on both **Accuracy** (grammar/vocab) and **Fluency** (speed/flow).",
                         competencies: ["Demonstrate increased proficiency (B1/B2/C1 level).", "Process input without mental translation.", "Produce output with reduced hesitation."],
                         strategy: "<strong>Immersion & Output:</strong> For Input, use the 'Input Hypothesis' (i+1). For Output, force yourself to use new vocabulary immediately. Use the 'Laboratory Mindset' tool.",
-                        connection: "Builds the raw ability required for ESP and Teaching courses."
+                        connection: "Builds the raw ability required for ESP and Teaching courses.",
+                        resources: ["Richards, J. C. (2008). *Teaching Listening and Speaking*.", "Nation, I.S.P. (2009). *Teaching ESL/EFL Reading and Writing*."]
                     };
                 case 'Linguistics':
                     return {
                         essence: "The abstract science behind the language.",
-                        description: "Linguistics courses train you to look at language analytically. You are stepping back from the meaning to look at the mechanics. Whether it is Discourse Analysis or Pragmatics, the goal is to make the invisible rules of language visible. This is crucial for teachers, who must explain these rules to confused students.",
+                        description: "Theoretical courses that analyze the systems of language. They provide the 'Content Knowledge' (CK) required for a teacher to explain rules and correct errors effectively.",
                         competencies: ["Analyze language data objectively.", "Identify patterns in language use.", "Explain complex linguistic rules simply."],
                         strategy: "<strong>Concept Mapping:</strong> Linguistics is hierarchical. Always map new terms to the bigger picture. Ask: 'How does this concept explain a mistake my future student might make?'",
-                        connection: "Provides the theoretical answers to practical teaching problems."
+                        connection: "Provides the theoretical answers to practical teaching problems.",
+                        resources: ["Fromkin, V. et al. *An Introduction to Language*."]
                     };
                 case 'Pedagogy':
                     return {
                         essence: "The art and science of teaching.",
-                        description: "These courses (Teaching Assessment, Curriculum Design, etc.) are your professional training. They bridge the gap between knowing English and teaching English. You will learn to manage classrooms, design tests, create materials, and handle the psychological needs of learners.",
+                        description: "Professional courses focusing on 'Pedagogical Content Knowledge' (PCK). Topics include classroom management, lesson planning, assessment, and material development.",
                         competencies: ["Design effective learning materials.", "Assess student progress fairly.", "Manage classroom dynamics."],
                         strategy: "<strong>Lesson Plan Simulation:</strong> When learning a theory, immediately sketch a lesson plan using it. Theory without application is useless here.",
-                        connection: "Directly applicable to your career as an educator."
+                        connection: "Directly applicable to your career as an educator.",
+                        resources: ["Harmer, J. (2007). *The Practice of English Language Teaching*."]
                     };
                 case 'Literature':
                     return {
                         essence: "Cultural and aesthetic appreciation.",
-                        description: "Literature courses are not just about reading stories. They are about Critical Theory. You will look at texts through the lens of history, gender, and culture. It builds empathy and high-level vocabulary.",
+                        description: "Study of literary texts (prose, poetry, drama) to develop critical thinking and cultural awareness. Analysis focuses on literary elements (plot, character, theme) and stylistic devices.",
                         competencies: ["Analyze themes and symbols.", "Critique texts using literary theory.", "Discuss cultural context."],
                         strategy: "<strong>Critical Analysis:</strong> Don't just read the plot. Analyze the themes, the historical context, and the stylistic choices.",
-                        connection: "Enhances vocabulary and cultural empathy."
+                        connection: "Enhances vocabulary and cultural empathy.",
+                        resources: ["Carter, R., & Long, M. N. (1991). *Teaching Literature*."]
                     };
                 case 'Specialized': 
                     return {
                         essence: "Applied English for specific contexts.",
-                        description: "These courses (ESP, Translation) prepare you for careers outside the classroom. They focus on specific genres of English—Business, Tourism, Science. The vocabulary and structure here are rigid and purpose-driven.",
+                        description: "ESP (English for Specific Purposes) and Translation courses. These focus on the specific needs of learners in professional fields (Business, Tourism) and the mechanics of transferring meaning between languages.",
                         competencies: ["Analyze specific genre conventions.", "Translate accurately between L1 and L2.", "Use domain-specific vocabulary."],
                         strategy: "<strong>Genre Analysis:</strong> Deconstruct texts from this specific field. What makes a 'Business Email' different from a 'Love Letter'?",
-                        connection: "Expands your career horizon beyond general teaching."
+                        connection: "Expands your career horizon beyond general teaching.",
+                        resources: ["Hutchinson, T., & Waters, A. (1987). *English for Specific Purposes*.", "Newmark, P. (1988). *A Textbook of Translation*."]
                     };
                 default: // General
                     return {
                         essence: "Character building and foundations.",
-                        description: "These university-wide courses (MKWN) build your identity as an Indonesian scholar. They provide the ethical and philosophical grounding for your degree.",
+                        description: "University-wide compulsory courses (MKWN) designed to build national character, ethics, and citizenship.",
                         competencies: ["Demonstrate national character.", "Apply ethical reasoning.", "Understand state philosophy."],
                         strategy: "<strong>Contextual Integration:</strong> Try to discuss these topics *in English*. Can you explain Pancasila in English?",
-                        connection: "Required for graduation."
+                        connection: "Required for graduation.",
+                        resources: ["Modul MKWN Universitas Terbuka."]
                     };
             }
         }
@@ -583,6 +602,12 @@
             let compList = "";
             if (details.competencies) {
                 compList = `<ul class="list-disc list-inside text-stone-600 space-y-1 mt-2">${details.competencies.map(c => `<li>${c}</li>`).join('')}</ul>`;
+            }
+
+            // Format resources as list items (NEW)
+            let resourceList = "";
+            if (details.resources) {
+                resourceList = `<ul class="list-disc list-inside text-stone-600 space-y-1 mt-2">${details.resources.map(r => `<li>${r}</li>`).join('')}</ul>`;
             }
 
             const content = `
@@ -625,6 +650,16 @@
                                 </h3>
                                 <div class="bg-white border border-stone-200 p-6 rounded-xl shadow-sm">
                                     ${compList}
+                                </div>
+                            </div>
+
+                            <!-- Resources (NEW) -->
+                            <div class="bg-blue-50 border border-blue-100 p-6 rounded-xl shadow-sm">
+                                <h3 class="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                                    <span>📚</span> Key References & Theorists
+                                </h3>
+                                <div class="text-sm">
+                                    ${resourceList}
                                 </div>
                             </div>
                         </div>
