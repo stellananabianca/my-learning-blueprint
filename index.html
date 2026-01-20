@@ -6,7 +6,6 @@
     <title>The Architect's Blueprint: English Education Strategy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <!-- Chosen Palette: Warm Stone & Earth - A minimalistic, academic, and calm palette using Stone neutrals with Amber and Slate accents. -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap');
         
@@ -18,6 +17,28 @@
         
         h1, h2, h3, h4, .serif {
             font-family: 'Merriweather', serif;
+        }
+
+        /* Animations for Subpage Transitions */
+        .page-transition {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .hidden-page {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            transform: translateY(20px);
+        }
+        .visible-page {
+            opacity: 1;
+            pointer-events: auto;
+            position: relative;
+            transform: translateY(0);
         }
 
         .chart-container {
@@ -38,10 +59,12 @@
 
         .card-hover {
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         .card-hover:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: #b45309;
         }
 
         .active-tab {
@@ -59,268 +82,228 @@
             border-bottom: 2px solid #e7e5e4;
         }
     </style>
-    <!-- Application Structure Plan: 
-         1. Header: Sets the academic tone.
-         2. Evolution Tracker: A high-level visual indicating the user's transformation journey (Apprentice -> Expert).
-         3. Strategic Phase Explorer (The Core): An interactive tab system allowing deep dives into the 3 phases. This prevents information overload by showing one phase's detailed strategies at a time.
-         4. Curriculum Dashboard: Data visualization section. Users can toggle between "Category Distribution" (Donut) and "Workload Intensity" (Bar). A filterable table allows finding specific courses. This satisfies the "Data Analyst" requirement.
-         5. The Scholar's Toolkit: A grid of cards for study techniques (Feynman, etc.).
-         6. Footer: Critical thinking prompts.
-    -->
-    <!-- Visualization & Content Choices:
-         - Phase Explorer: HTML/JS Tabs. Goal: Allow focused reading of complex strategies.
-         - Curriculum Charts: Chart.js. Goal: Visualize the balance of the degree. Donut for category split, Bar for semester load.
-         - Course List: HTML Table with JS Filter. Goal: Quick reference.
-         - Toolkit: Card Grid. Goal: Actionable advice.
-         - NO SVG/Mermaid: All icons are Unicode or CSS shapes. Charts are Canvas.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
 <body class="bg-stone-50 text-stone-800 antialiased selection:bg-amber-100 selection:text-amber-900">
 
     <!-- Navigation / Header -->
     <header class="w-full bg-white border-b border-stone-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showDashboard()">
                 <span class="text-2xl">🏛️</span>
                 <h1 class="text-xl font-bold text-stone-900 tracking-tight">The Architect's Blueprint</h1>
             </div>
             <nav class="hidden md:flex space-x-8 text-sm font-medium">
-                <a href="#roadmap" class="text-stone-600 hover:text-amber-700 transition">Roadmap</a>
-                <a href="#curriculum" class="text-stone-600 hover:text-amber-700 transition">Curriculum Data</a>
-                <a href="#toolkit" class="text-stone-600 hover:text-amber-700 transition">Toolkit</a>
+                <button onclick="showDashboard(); scrollToSection('roadmap')" class="text-stone-600 hover:text-amber-700 transition">Roadmap</button>
+                <button onclick="showDashboard(); scrollToSection('curriculum')" class="text-stone-600 hover:text-amber-700 transition">Curriculum Data</button>
+                <button onclick="showDashboard(); scrollToSection('toolkit')" class="text-stone-600 hover:text-amber-700 transition">Toolkit</button>
             </nav>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-screen relative">
 
-        <!-- Intro Section -->
-        <section class="text-center max-w-3xl mx-auto">
-            <h2 class="text-4xl font-serif font-bold text-stone-900 mb-4">Strategic Learning for English Education</h2>
-            <p class="text-lg text-stone-600 leading-relaxed">
-                This is not just a list of courses. It is a blueprint for constructing your identity as a scholar and educator. 
-                Move beyond simple time management to <span class="font-semibold text-amber-700">cognitive synthesis</span>.
-            </p>
-        </section>
-
-        <!-- Section 1: The Evolution Tracker (Summary Table Viz) -->
-        <section id="evolution" class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 md:p-8">
-            <div class="mb-6">
-                <h3 class="text-2xl font-serif font-semibold text-stone-800">Your Evolutionary Path</h3>
-                <p class="text-stone-500 mt-2">See how your role shifts from Semester 1 to Semester 8.</p>
-            </div>
+        <!-- ================= DASHBOARD VIEW ================= -->
+        <div id="dashboard-view" class="visible-page page-transition space-y-16">
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- Phase 1 -->
-                <div class="bg-stone-50 rounded-lg p-5 border-l-4 border-emerald-500">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase tracking-wider text-stone-400">Semesters 1-3</span>
-                        <span class="text-emerald-600 font-bold">Phase 1</span>
-                    </div>
-                    <h4 class="text-lg font-bold text-stone-800 mb-1">The Apprentice</h4>
-                    <p class="text-sm text-stone-600 italic mb-3">"I am learning English."</p>
-                    <div class="text-sm border-t border-stone-200 pt-3">
-                        <span class="font-semibold">Output:</span> High Proficiency
-                    </div>
-                </div>
-
-                <!-- Phase 2 -->
-                <div class="bg-stone-50 rounded-lg p-5 border-l-4 border-amber-500">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase tracking-wider text-stone-400">Semesters 4-6</span>
-                        <span class="text-amber-600 font-bold">Phase 2</span>
-                    </div>
-                    <h4 class="text-lg font-bold text-stone-800 mb-1">The Analyst</h4>
-                    <p class="text-sm text-stone-600 italic mb-3">"I analyze how it works."</p>
-                    <div class="text-sm border-t border-stone-200 pt-3">
-                        <span class="font-semibold">Output:</span> Lesson Plans & Methods
-                    </div>
-                </div>
-
-                <!-- Phase 3 -->
-                <div class="bg-stone-50 rounded-lg p-5 border-l-4 border-indigo-500">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase tracking-wider text-stone-400">Semesters 7-8</span>
-                        <span class="text-indigo-600 font-bold">Phase 3</span>
-                    </div>
-                    <h4 class="text-lg font-bold text-stone-800 mb-1">The Expert</h4>
-                    <p class="text-sm text-stone-600 italic mb-3">"I create new knowledge."</p>
-                    <div class="text-sm border-t border-stone-200 pt-3">
-                        <span class="font-semibold">Output:</span> Thesis & Innovation
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 2: Interactive Roadmap (The Strategy) -->
-        <section id="roadmap" class="scroll-mt-20">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-6 border-b border-stone-200 pb-4">
-                <div class="max-w-2xl">
-                    <h3 class="text-2xl font-serif font-bold text-stone-900">Strategic Phases & Actions</h3>
-                    <p class="text-stone-600 mt-2">Select a phase to reveal specific learning strategies, critical twists, and course connections.</p>
-                </div>
-                <!-- Tabs -->
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <button onclick="switchPhase('p1')" id="tab-p1" class="active-tab pb-2 text-sm font-medium transition-colors focus:outline-none">Phase 1: Foundation</button>
-                    <button onclick="switchPhase('p2')" id="tab-p2" class="inactive-tab pb-2 text-sm font-medium transition-colors focus:outline-none">Phase 2: The Bridge</button>
-                    <button onclick="switchPhase('p3')" id="tab-p3" class="inactive-tab pb-2 text-sm font-medium transition-colors focus:outline-none">Phase 3: The Scholar</button>
-                </div>
-            </div>
-
-            <!-- Dynamic Content Area -->
-            <div id="phase-content" class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 md:p-10 min-h-[400px]">
-                <!-- Content injected via JS -->
-            </div>
-        </section>
-
-        <!-- Section 3: Curriculum Data Dashboard -->
-        <section id="curriculum" class="scroll-mt-20">
-            <div class="mb-8">
-                <h3 class="text-2xl font-serif font-bold text-stone-900">Curriculum Analytics</h3>
-                <p class="text-stone-600 mt-2">
-                    Analyze the program structure. Use the charts to understand the balance between theory (Linguistics), practice (Skills), and application (Pedagogy).
+            <!-- Intro Section -->
+            <section class="text-center max-w-3xl mx-auto">
+                <h2 class="text-4xl font-serif font-bold text-stone-900 mb-4">Strategic Learning for English Education</h2>
+                <p class="text-lg text-stone-600 leading-relaxed">
+                    Welcome to your interactive curriculum guide. Click on any <strong>Course</strong> or <strong>Toolkit Item</strong> below to enter a detailed subpage with specific strategies and architectural insights.
                 </p>
-            </div>
+            </section>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
-                <!-- Chart 1: Distribution -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                    <h4 class="text-sm font-bold uppercase tracking-wide text-stone-500 mb-4 text-center">Credit Distribution (SKS) by Category</h4>
-                    <div class="chart-container">
-                        <canvas id="categoryChart"></canvas>
+            <!-- Section 1: The Evolution Tracker -->
+            <section id="evolution" class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 md:p-8">
+                <div class="mb-6">
+                    <h3 class="text-2xl font-serif font-semibold text-stone-800">Your Evolutionary Path</h3>
+                    <p class="text-stone-500 mt-2">See how your role shifts from Semester 1 to Semester 8.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-stone-50 rounded-lg p-5 border-l-4 border-emerald-500">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-stone-400">Semesters 1-3</span>
+                            <span class="text-emerald-600 font-bold">Phase 1</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-stone-800 mb-1">The Apprentice</h4>
+                        <p class="text-sm text-stone-600 italic mb-3">"I am learning English."</p>
                     </div>
-                    <div class="mt-4 text-center text-xs text-stone-500">
-                        Visualizes the "Pillars" of your degree. Note the balance between Pedagogy and Skills.
+                    <div class="bg-stone-50 rounded-lg p-5 border-l-4 border-amber-500">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-stone-400">Semesters 4-6</span>
+                            <span class="text-amber-600 font-bold">Phase 2</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-stone-800 mb-1">The Analyst</h4>
+                        <p class="text-sm text-stone-600 italic mb-3">"I analyze how it works."</p>
+                    </div>
+                    <div class="bg-stone-50 rounded-lg p-5 border-l-4 border-indigo-500">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-stone-400">Semesters 7-8</span>
+                            <span class="text-indigo-600 font-bold">Phase 3</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-stone-800 mb-1">The Expert</h4>
+                        <p class="text-sm text-stone-600 italic mb-3">"I create new knowledge."</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Interactive Roadmap -->
+            <section id="roadmap" class="scroll-mt-20">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-6 border-b border-stone-200 pb-4">
+                    <div class="max-w-2xl">
+                        <h3 class="text-2xl font-serif font-bold text-stone-900">Strategic Phases & Actions</h3>
+                        <p class="text-stone-600 mt-2">Select a phase to reveal specific learning strategies.</p>
+                    </div>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <button onclick="switchPhase('p1')" id="tab-p1" class="active-tab pb-2 text-sm font-medium transition-colors focus:outline-none">Phase 1: Foundation</button>
+                        <button onclick="switchPhase('p2')" id="tab-p2" class="inactive-tab pb-2 text-sm font-medium transition-colors focus:outline-none">Phase 2: The Bridge</button>
+                        <button onclick="switchPhase('p3')" id="tab-p3" class="inactive-tab pb-2 text-sm font-medium transition-colors focus:outline-none">Phase 3: The Scholar</button>
+                    </div>
+                </div>
+                <div id="phase-content" class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 md:p-10 min-h-[400px]">
+                    <!-- Content injected via JS -->
+                </div>
+            </section>
+
+            <!-- Section 3: Curriculum Dashboard -->
+            <section id="curriculum" class="scroll-mt-20">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-serif font-bold text-stone-900">Curriculum Analytics & Course Subpages</h3>
+                    <p class="text-stone-600 mt-2">
+                        <span class="font-bold text-amber-700">Click on any row in the table below</span> to open a detailed strategic subpage for that specific course.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                        <h4 class="text-sm font-bold uppercase tracking-wide text-stone-500 mb-4 text-center">Credit Distribution (SKS)</h4>
+                        <div class="chart-container"><canvas id="categoryChart"></canvas></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                        <h4 class="text-sm font-bold uppercase tracking-wide text-stone-500 mb-4 text-center">Workload Intensity</h4>
+                        <div class="chart-container"><canvas id="semesterChart"></canvas></div>
                     </div>
                 </div>
 
-                <!-- Chart 2: Timeline -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                    <h4 class="text-sm font-bold uppercase tracking-wide text-stone-500 mb-4 text-center">Workload Intensity (SKS) per Semester</h4>
-                    <div class="chart-container">
-                        <canvas id="semesterChart"></canvas>
+                <!-- Filterable Course List -->
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                    <div class="p-4 border-b border-stone-200 bg-stone-50 flex flex-wrap gap-4 items-center justify-between">
+                        <h4 class="font-bold text-stone-700">Course Explorer</h4>
+                        <div class="flex gap-2">
+                            <select id="semesterFilter" onchange="filterCourses()" class="bg-white border border-stone-300 text-stone-700 text-sm rounded-md p-2">
+                                <option value="all">All Semesters</option>
+                                <option value="1">Semester 1</option>
+                                <option value="2">Semester 2</option>
+                                <option value="3">Semester 3</option>
+                                <option value="4">Semester 4</option>
+                                <option value="5">Semester 5</option>
+                                <option value="6">Semester 6</option>
+                                <option value="7">Semester 7</option>
+                                <option value="8">Semester 8</option>
+                            </select>
+                            <select id="categoryFilter" onchange="filterCourses()" class="bg-white border border-stone-300 text-stone-700 text-sm rounded-md p-2">
+                                <option value="all">All Categories</option>
+                                <option value="Skills">Language Skills</option>
+                                <option value="Linguistics">Linguistics</option>
+                                <option value="Pedagogy">Education & Pedagogy</option>
+                                <option value="Literature">Literature</option>
+                                <option value="Specialized">Supporting & Specialized</option>
+                                <option value="General">General (MKWN/General)</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="mt-4 text-center text-xs text-stone-500">
-                        Semesters 3-6 are the "Heavy Lift" periods. Plan your extracurriculars accordingly.
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-stone-600">
+                            <thead class="text-xs text-stone-700 uppercase bg-stone-100">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Sem</th>
+                                    <th scope="col" class="px-6 py-3">Code</th>
+                                    <th scope="col" class="px-6 py-3">Course Name</th>
+                                    <th scope="col" class="px-6 py-3">SKS</th>
+                                    <th scope="col" class="px-6 py-3">Category</th>
+                                    <th scope="col" class="px-6 py-3">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="courseTableBody">
+                                <!-- JS Populated -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Filterable Course List -->
-            <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
-                <div class="p-4 border-b border-stone-200 bg-stone-50 flex flex-wrap gap-4 items-center justify-between">
-                    <h4 class="font-bold text-stone-700">Course Explorer</h4>
-                    <div class="flex gap-2">
-                        <select id="semesterFilter" onchange="filterCourses()" class="bg-white border border-stone-300 text-stone-700 text-sm rounded-md focus:ring-amber-500 focus:border-amber-500 block p-2">
-                            <option value="all">All Semesters</option>
-                            <option value="1">Semester 1</option>
-                            <option value="2">Semester 2</option>
-                            <option value="3">Semester 3</option>
-                            <option value="4">Semester 4</option>
-                            <option value="5">Semester 5</option>
-                            <option value="6">Semester 6</option>
-                            <option value="7">Semester 7</option>
-                            <option value="8">Semester 8</option>
-                        </select>
-                        <select id="categoryFilter" onchange="filterCourses()" class="bg-white border border-stone-300 text-stone-700 text-sm rounded-md focus:ring-amber-500 focus:border-amber-500 block p-2">
-                            <option value="all">All Categories</option>
-                            <option value="Skills">Language Skills</option>
-                            <option value="Linguistics">Linguistics</option>
-                            <option value="Pedagogy">Education & Pedagogy</option>
-                            <option value="Literature">Literature</option>
-                            <option value="Specialized">Supporting & Specialized</option>
-                            <option value="General">General (MKWN/General)</option>
-                        </select>
+            <!-- Section 4: The Scholar's Toolkit -->
+            <section id="toolkit" class="scroll-mt-20">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-serif font-bold text-stone-900">The Scholar's Toolkit</h3>
+                    <p class="text-stone-600 mt-2">
+                        Click on a tool below to view its <strong>detailed protocol</strong> and implementation strategy.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Tool 1 -->
+                    <div onclick="openToolkitModal('lab')" class="bg-white p-6 rounded-xl border border-stone-200 card-hover group h-full flex flex-col">
+                        <div class="text-amber-600 text-3xl mb-4">🧪</div>
+                        <h4 class="text-xl font-bold text-stone-800 mb-2">The "Laboratory" Mindset</h4>
+                        <span class="inline-block px-2 py-1 bg-emerald-100 text-emerald-800 text-xs rounded-full mb-4 w-max">For: Skills (Speaking/Listening)</span>
+                        <p class="text-stone-600 mb-4 flex-grow">
+                            Treat your daily life as an immersive lab experiment rather than a classroom.
+                        </p>
+                        <div class="text-amber-700 font-semibold text-sm group-hover:underline mt-auto">Open Protocol &rarr;</div>
+                    </div>
+
+                    <!-- Tool 2 -->
+                    <div onclick="openToolkitModal('feynman')" class="bg-white p-6 rounded-xl border border-stone-200 card-hover group h-full flex flex-col">
+                        <div class="text-amber-600 text-3xl mb-4">🧠</div>
+                        <h4 class="text-xl font-bold text-stone-800 mb-2">The Feynman Technique</h4>
+                        <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full mb-4 w-max">For: Linguistics/Theory</span>
+                        <p class="text-stone-600 mb-4 flex-grow">
+                            A mental compression algorithm: If you can't explain it simply, you don't understand it.
+                        </p>
+                        <div class="text-amber-700 font-semibold text-sm group-hover:underline mt-auto">Open Protocol &rarr;</div>
+                    </div>
+
+                    <!-- Tool 3 -->
+                    <div onclick="openToolkitModal('zettel')" class="bg-white p-6 rounded-xl border border-stone-200 card-hover group h-full flex flex-col">
+                        <div class="text-amber-600 text-3xl mb-4">🗃️</div>
+                        <h4 class="text-xl font-bold text-stone-800 mb-2">Zettelkasten Method</h4>
+                        <span class="inline-block px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full mb-4 w-max">For: Research/Writing</span>
+                        <p class="text-stone-600 mb-4 flex-grow">
+                            Building a "Second Brain" by linking atomic ideas instead of storing isolated notes.
+                        </p>
+                        <div class="text-amber-700 font-semibold text-sm group-hover:underline mt-auto">Open Protocol &rarr;</div>
                     </div>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-stone-600">
-                        <thead class="text-xs text-stone-700 uppercase bg-stone-100">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">Sem</th>
-                                <th scope="col" class="px-6 py-3">Code</th>
-                                <th scope="col" class="px-6 py-3">Course Name</th>
-                                <th scope="col" class="px-6 py-3">SKS</th>
-                                <th scope="col" class="px-6 py-3">Category</th>
-                            </tr>
-                        </thead>
-                        <tbody id="courseTableBody">
-                            <!-- JS Populated -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Section 4: The Scholar's Toolkit -->
-        <section id="toolkit" class="scroll-mt-20">
-            <div class="mb-8">
-                <h3 class="text-2xl font-serif font-bold text-stone-900">The Scholar's Toolkit</h3>
-                <p class="text-stone-600 mt-2">
-                    Specific techniques tailored to handle the heavy reading, abstract theory, and skill acquisition of this program.
+            <!-- Footer -->
+            <footer class="bg-stone-900 text-stone-300 rounded-xl p-8 md:p-12 text-center">
+                <h3 class="text-xl font-serif font-bold text-white mb-4">Critical Inquiry Prompt</h3>
+                <p class="max-w-2xl mx-auto text-stone-400 mb-6">
+                    "Does 'Communicative Language Teaching' work in a crowded classroom in rural Indonesia? Why or why not?"
                 </p>
-            </div>
+            </footer>
+        </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Tool 1 -->
-                <div class="bg-white p-6 rounded-xl border border-stone-200 card-hover group">
-                    <div class="text-amber-600 text-3xl mb-4">🧪</div>
-                    <h4 class="text-xl font-bold text-stone-800 mb-2">The "Laboratory" Mindset</h4>
-                    <span class="inline-block px-2 py-1 bg-emerald-100 text-emerald-800 text-xs rounded-full mb-4">For: Skills (Speaking/Listening)</span>
-                    <p class="text-stone-600 mb-4">
-                        Don't just study English; inhabit it. Treat your daily life as a lab experiment.
-                    </p>
-                    <div class="bg-stone-50 p-4 rounded-lg text-sm text-stone-700 border border-stone-100">
-                        <strong>Action:</strong> Narrate your life. Change your phone language. Shadow audio clips immediately.
-                    </div>
-                </div>
+        <!-- ================= SUBPAGE MODAL (DETAIL VIEW) ================= -->
+        <div id="subpage-view" class="hidden-page page-transition bg-white min-h-screen absolute top-0 left-0 w-full z-50 rounded-xl shadow-2xl border border-stone-200 p-6 md:p-10">
+            <!-- Back Button -->
+            <button onclick="showDashboard()" class="mb-8 flex items-center text-stone-500 hover:text-amber-700 transition font-medium">
+                <span class="mr-2">←</span> Back to Dashboard
+            </button>
 
-                <!-- Tool 2 -->
-                <div class="bg-white p-6 rounded-xl border border-stone-200 card-hover">
-                    <div class="text-amber-600 text-3xl mb-4">🧠</div>
-                    <h4 class="text-xl font-bold text-stone-800 mb-2">The Feynman Technique</h4>
-                    <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full mb-4">For: Linguistics/Theory</span>
-                    <p class="text-stone-600 mb-4">
-                        If you can't explain it simply, you don't understand it well enough.
-                    </p>
-                    <div class="bg-stone-50 p-4 rounded-lg text-sm text-stone-700 border border-stone-100">
-                        <strong>Action:</strong> Explain "Morpheme vs Allomorph" to a child. If you get stuck, go back to the book.
-                    </div>
-                </div>
-
-                <!-- Tool 3 -->
-                <div class="bg-white p-6 rounded-xl border border-stone-200 card-hover">
-                    <div class="text-amber-600 text-3xl mb-4">🗃️</div>
-                    <h4 class="text-xl font-bold text-stone-800 mb-2">Zettelkasten Method</h4>
-                    <span class="inline-block px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full mb-4">For: Research/Writing</span>
-                    <p class="text-stone-600 mb-4">
-                        Stop writing from a blank page. Build a database of connected thoughts.
-                    </p>
-                    <div class="bg-stone-50 p-4 rounded-lg text-sm text-stone-700 border border-stone-100">
-                        <strong>Action:</strong> Connect an idea from Sem 2 (Reading) to Sem 5 (Teaching Methods) in your notes.
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer / Critical Thinking -->
-        <footer class="bg-stone-900 text-stone-300 rounded-xl p-8 md:p-12 text-center">
-            <h3 class="text-xl font-serif font-bold text-white mb-4">Critical Inquiry Prompt</h3>
-            <p class="max-w-2xl mx-auto text-stone-400 mb-6">
-                "Does 'Communicative Language Teaching' work in a crowded classroom in rural Indonesia? Why or why not?"
-            </p>
-            <div class="text-sm text-stone-500">
-                Use your knowledge from <em>Sociolinguistics</em> and <em>Philosophy of Education</em> to answer this in your Commonplace Book.
-            </div>
-        </footer>
+            <!-- Subpage Content Injection Point -->
+            <div id="subpage-content"></div>
+        </div>
 
     </main>
 
     <!-- JavaScript Logic -->
     <script>
-        // --- DATA STORAGE ---
-        // Course Data derived from iya.pdf
+        // --- DATA ---
+        // Same course list, but we will augment it with a strategy generator
         const courses = [
             // Sem 1
             {sem: 1, code: 'SPBI4102', name: 'Intensive Reading', sks: 3, cat: 'Skills'},
@@ -362,7 +345,6 @@
             {sem: 5, code: 'SPBI4301', name: 'English Morphology and Syntax', sks: 3, cat: 'Linguistics'},
             {sem: 5, code: 'SPBI4210', name: 'Academic Speaking', sks: 3, cat: 'Skills'},
             {sem: 5, code: 'FSS14205', name: 'Penerjemahan Karya Fiksi', sks: 3, cat: 'Specialized'},
-            // {sem: 5, code: 'FSSI4201', name: 'Teori dan Masalah Penerjemahan', sks: 3, cat: 'Specialized'}, // Removed to balance logic based on PDF grouping
             {sem: 5, code: 'SPBI4312', name: 'English for Science and Tech', sks: 2, cat: 'Specialized'},
             {sem: 5, code: 'SPBI4311', name: 'Sociolinguistics', sks: 2, cat: 'Linguistics'},
             {sem: 5, code: 'SPIK4006', name: 'Filsafat Ilmu', sks: 2, cat: 'General'},
@@ -389,229 +371,335 @@
             {sem: 8, code: 'MKDI4203', name: 'Kewirausahaan di Era Digital', sks: 3, cat: 'General'}
         ];
 
-        // Strategy Data
-        const phaseData = {
-            p1: {
-                title: "Phase 1: The Self-Reflective Learner (Sem 1-3)",
-                goal: "Achieve high proficiency while observing *how* you learn.",
-                twist: "You are both the subject and the scientist. Analyze why certain tasks are hard for you. This builds empathy.",
-                actions: [
-                    {
-                        title: "Grammar in Context",
-                        desc: "Don't memorize rules. Diagram sentences from your *Intensive Reading* texts. See grammar as the skeleton of meaning."
-                    },
-                    {
-                        title: "Input/Output Loop",
-                        desc: "Use **Shadowing**. Listen to *Intensive Listening* materials and repeat instantly to link processing to production."
-                    },
-                    {
-                        title: "Early Academic Identity",
-                        desc: "Start a 'Commonplace Book'. In *Critical Reading*, don't just answer questions—write counter-arguments."
-                    }
+        // --- SUBPAGE & STRATEGY GENERATOR ---
+        // This function generates unique strategies per course based on Category, or uses Specific Overrides.
+        function getCourseDetails(course) {
+            
+            // 1. SPECIFIC OVERRIDES (For Key Courses)
+            const overrides = {
+                'SPBI4107': { // Intro to Ling
+                    essence: "The Periodic Table of Language. You are learning the atomic elements (sounds, words, sentence structures) that build every language.",
+                    strategy: "Use the <strong>Feynman Technique</strong>. Do not just memorize 'phoneme'; explain how it differs from a 'phone' to a non-expert. Create a concept map linking Phonology -> Morphology -> Syntax.",
+                    connection: "Foundation for: Morphology (Sem 5) and Syntax (Sem 5)."
+                },
+                'SPBI4212': { // Micro Teaching
+                    essence: "The Flight Simulator. This is where theory meets reality. It is a safe space to crash and burn before you face real students.",
+                    strategy: "<strong>Video Analysis:</strong> Record your sessions. Watch them twice: once with sound OFF to check body language/presence, once with sound ON to check instruction clarity (Teacher Talk Time).",
+                    connection: "Prepares for: PLP (Sem 6)."
+                },
+                'SPBI4301': { // Morphology & Syntax
+                    essence: "The Engineering of English. How words are built and how sentences are structured.",
+                    strategy: "<strong>Tree Diagrams:</strong> distinct visual structures are easier to remember than rules. Diagram sentences from your *Extensive Reading* books. Don't just analyze textbook examples; analyze real world text.",
+                    connection: "Critical for: Grammar teaching."
+                },
+                'SPBI4470': { // Skripsi
+                    essence: "The Capstone. Your contribution to the field of knowledge.",
+                    strategy: "<strong>Zettelkasten:</strong> If you haven't started your note-taking system by now, start today. Do not wait for Sem 7. Every paper you read in Sem 4-6 is potential data for this.",
+                    connection: "Culmination of: Research in ELT (Sem 4) and Metode Penelitian (Sem 6)."
+                }
+            };
+
+            if (overrides[course.code]) {
+                return overrides[course.code];
+            }
+
+            // 2. CATEGORY-BASED GENERATOR (For the rest)
+            switch (course.cat) {
+                case 'Skills':
+                    return {
+                        essence: "A gym for your brain. This course is about proficiency and muscle memory, not just intellectual understanding.",
+                        strategy: "<strong>Immersion & Output:</strong> For Reading/Listening, focus on *Input Hypothesis* (i+1). For Speaking/Writing, focus on *Output*. Use the 'Laboratory Mindset' tool to shadow audio and narrate your daily life.",
+                        connection: "Builds the raw ability required for ESP and Teaching courses."
+                    };
+                case 'Linguistics':
+                    return {
+                        essence: "The abstract science behind the language. Understanding the 'Why' so you can explain it to students.",
+                        strategy: "<strong>Concept Mapping:</strong> Linguistics is hierarchical. Always map new terms to the bigger picture. Ask: 'How does this concept explain a mistake my future student might make?'",
+                        connection: "Provides the theoretical answers to practical teaching problems."
+                    };
+                case 'Pedagogy':
+                    return {
+                        essence: "The art and science of teaching. How to transfer what you know into another person's brain.",
+                        strategy: "<strong>Lesson Plan Simulation:</strong> When learning a theory (e.g., TPR), immediately sketch a 10-minute lesson plan using it. Theory without application is useless here.",
+                        connection: "Directly applicable to your career as an educator."
+                    };
+                case 'Literature':
+                    return {
+                        essence: "Cultural and aesthetic appreciation. Understanding the soul of the language.",
+                        strategy: "<strong>Critical Analysis:</strong> Don't just read the plot. Analyze the themes, the historical context, and the stylistic choices. How does the culture shape the text?",
+                        connection: "Enhances vocabulary and cultural empathy."
+                    };
+                case 'Specialized': // ESP, Translation
+                    return {
+                        essence: "Applied English for specific professional contexts.",
+                        strategy: "<strong>Genre Analysis:</strong> Deconstruct texts from this specific field. What makes a 'Business Email' different from a 'Love Letter'? Analyze structure, vocabulary, and tone.",
+                        connection: "Expands your career horizon beyond general teaching."
+                    };
+                case 'General': // MKWN
+                    return {
+                        essence: "Character building and national identity foundation.",
+                        strategy: "<strong>Contextual Integration:</strong> Try to discuss these topics *in English*. Can you explain Pancasila in English? This turns a general requirement into language practice.",
+                        connection: "Required for graduation and national character."
+                    };
+                default:
+                    return {
+                        essence: "Core curriculum component.",
+                        strategy: "Review the syllabus week by week. Ensure assignments are started early.",
+                        connection: "Part of the degree structure."
+                    };
+            }
+        }
+
+        // --- TOOLKIT DATA ---
+        const toolkitDetails = {
+            'lab': {
+                title: "The 'Laboratory' Mindset",
+                icon: "🧪",
+                subtitle: "For Skills (Speaking/Listening)",
+                philosophy: "The classroom is too short. To master a language, you must treat your entire waking life as a laboratory. You are not a student; you are a scientist observing and experimenting with sound.",
+                steps: [
+                    "<strong>Narrate Your Life:</strong> As you walk, cook, or clean, whisper a running commentary in English. 'I am picking up the spoon. It feels cold.'",
+                    "<strong>Shadowing:</strong> When listening to a podcast, repeat the words *instantly* (0.5 seconds behind the speaker). Copy their intonation, speed, and emotion. Do not just listen passively.",
+                    "<strong>Device Language:</strong> Change your phone, laptop, and social media settings to English. Force your brain to navigate the digital world in L2."
                 ],
-                bg: "bg-emerald-50",
-                border: "border-emerald-200"
+                why: "This builds neural pathways for 'automaticity'. You stop translating in your head and start thinking in the language."
             },
-            p2: {
-                title: "Phase 2: The Pedagogical Analyst (Sem 4-6)",
-                goal: "Transition from 'knowing English' to 'knowing how to teach English'.",
-                twist: "Synthesize Abstract Theory (Linguistics) with Concrete Application (Teaching Methods).",
-                actions: [
-                    {
-                        title: "Linguistics-Pedagogy Link",
-                        desc: "Connect *Sociolinguistics* to student backgrounds. Connect *Morphology* to explaining prefixes to beginners."
-                    },
-                    {
-                        title: "The Simulation Lab",
-                        desc: "**Record yourself** in *Micro Teaching*. Watch with sound OFF (body language) and ON (instructional clarity)."
-                    },
-                    {
-                        title: "ESP & Specialization",
-                        desc: "Perform **Genre Analysis**. Analyze the structure of business emails vs. tourism brochures."
-                    }
+            'feynman': {
+                title: "The Feynman Technique",
+                icon: "🧠",
+                subtitle: "For Linguistics/Theory",
+                philosophy: "Complexity is a mask for lack of understanding. If you cannot explain a concept (like 'Allomorph' or 'Schema Theory') in simple terms, you don't own it yet.",
+                steps: [
+                    "<strong>Pick a Concept:</strong> Write the name of the concept at the top of a blank sheet.",
+                    "<strong>Teach a Child:</strong> Pretend you are teaching it to a 12-year-old. Use simple words. Avoid jargon. Use analogies (e.g., 'Grammar is like the traffic rules of language').",
+                    "<strong>Identify Gaps:</strong> When you get stuck or use a big word to cover a gap, stop. Go back to the textbook.",
+                    "<strong>Simplify & Refine:</strong> Rewrite your explanation until it is crystal clear."
                 ],
-                bg: "bg-amber-50",
-                border: "border-amber-200"
+                why: "This exposes 'illusions of competence'—where you recognize a word but don't actually understand the mechanics behind it."
             },
-            p3: {
-                title: "Phase 3: The Scholar-Practitioner (Sem 7-8)",
-                goal: "Professional mastery and contribution to the field (Thesis).",
-                twist: "You are no longer consuming knowledge; you are producing it.",
-                actions: [
-                    {
-                        title: "Research Synthesis",
-                        desc: "Start your thesis idea in Sem 5. Keep a Research Journal. Find gaps in senior theses."
-                    },
-                    {
-                        title: "Technology & Innovation",
-                        desc: "Critique apps using *SLA* knowledge. Do they actually help learning or are they just games?"
-                    },
-                    {
-                        title: "Translation as Mediation",
-                        desc: "Treat translation as 'Rewriting' (thought-for-thought). Use *Intercultural Comm* theories."
-                    }
+            'zettel': {
+                title: "Zettelkasten Method",
+                icon: "🗃️",
+                subtitle: "For Research/Writing",
+                philosophy: "Writing a thesis from a blank page is terrifying. Writing a thesis by assembling 500 small, pre-written notes is easy. Treat knowledge as a network, not a list.",
+                steps: [
+                    "<strong>Fleeting Notes:</strong> Capture quick thoughts during lectures. Don't worry about format.",
+                    "<strong>Literature Notes:</strong> When reading a journal article, summarize it in your own words. Add the citation.",
+                    "<strong>Permanent Notes (The Zettel):</strong> This is the key. Write one single idea on a card/digital note. It must be self-contained. Give it a title.",
+                    "<strong>Link Them:</strong> Connect this new note to an old note. 'This idea about *Motivation* contradicts what I learned in *Psychology* last semester.' These links become your thesis."
                 ],
-                bg: "bg-indigo-50",
-                border: "border-indigo-200"
+                why: "It separates the thinking process from the writing process. By the time you need to write your Skripsi, you are just assembling blocks you already made."
             }
         };
 
-        // --- INTERACTION LOGIC ---
+        // --- NAVIGATION LOGIC ---
 
-        // 1. Phase Switcher
-        function switchPhase(phaseId) {
-            // Update Tab Styles
-            ['p1', 'p2', 'p3'].forEach(id => {
-                const btn = document.getElementById(`tab-${id}`);
-                if (id === phaseId) {
-                    btn.className = "active-tab pb-2 text-sm font-medium transition-colors focus:outline-none";
-                } else {
-                    btn.className = "inactive-tab pb-2 text-sm font-medium transition-colors focus:outline-none";
-                }
-            });
+        function showDashboard() {
+            document.getElementById('subpage-view').classList.remove('visible-page');
+            document.getElementById('subpage-view').classList.add('hidden-page');
+            document.getElementById('dashboard-view').classList.remove('hidden-page');
+            document.getElementById('dashboard-view').classList.add('visible-page');
+            window.scrollTo(0,0);
+        }
 
-            // Update Content
-            const data = phaseData[phaseId];
-            const contentDiv = document.getElementById('phase-content');
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if(el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- RENDER LOGIC ---
+
+        function openCourseModal(index) {
+            const course = courses[index];
+            const details = getCourseDetails(course);
             
-            let actionsHTML = '';
-            data.actions.forEach(action => {
-                actionsHTML += `
-                    <div class="bg-white p-4 rounded-lg border border-stone-100 shadow-sm">
-                        <h5 class="font-bold text-stone-800 mb-2">${action.title}</h5>
-                        <p class="text-sm text-stone-600">${action.desc}</p>
-                    </div>
-                `;
-            });
-
-            contentDiv.innerHTML = `
+            // Generate HTML for the subpage
+            const content = `
                 <div class="animate-fade-in-up">
-                    <div class="flex flex-col md:flex-row gap-6 mb-8">
-                        <div class="flex-1">
-                            <h4 class="text-xl font-bold text-stone-900 mb-2">${data.title}</h4>
-                            <p class="text-stone-700 font-medium mb-4">${data.goal}</p>
-                            <div class="bg-white p-4 rounded-lg border-l-4 ${data.border.replace('200', '500')} bg-opacity-50 italic text-stone-600 text-sm">
-                                <strong>Critical Twist:</strong> ${data.twist}
+                    <div class="border-b border-stone-200 pb-6 mb-6">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="px-3 py-1 bg-stone-100 text-stone-600 rounded-full text-xs font-bold tracking-wide uppercase">${course.cat}</span>
+                            <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold tracking-wide uppercase">${course.sks} SKS</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-2">${course.name}</h2>
+                        <div class="font-mono text-stone-500 text-lg">${course.code} &bull; Semester ${course.sem}</div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-xl font-bold text-stone-800 mb-3 flex items-center gap-2">
+                                    <span>🏛️</span> The Architect's View
+                                </h3>
+                                <div class="prose text-stone-600 leading-relaxed bg-stone-50 p-6 rounded-xl border border-stone-100">
+                                    ${details.essence}
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-stone-800 mb-3 flex items-center gap-2">
+                                    <span>🔗</span> Connection Logic
+                                </h3>
+                                <div class="text-stone-600">
+                                    ${details.connection}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-stone-800 mb-3 flex items-center gap-2">
+                                <span>📐</span> Strategic Blueprint
+                            </h3>
+                            <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-xl text-stone-800 leading-relaxed shadow-sm">
+                                ${details.strategy}
+                            </div>
+                            <div class="mt-8">
+                                <h4 class="font-bold text-stone-400 uppercase text-xs tracking-wider mb-2">Study Tips</h4>
+                                <ul class="list-disc list-inside text-sm text-stone-600 space-y-2">
+                                    <li>Review syllabus in Week 1.</li>
+                                    <li>Find a study buddy for this specific topic.</li>
+                                    <li>Check library for supplementary texts.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <h5 class="font-bold text-stone-400 uppercase tracking-wider text-xs mb-4">Strategic Actions</h5>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        ${actionsHTML}
+                </div>
+            `;
+
+            document.getElementById('subpage-content').innerHTML = content;
+            
+            // Switch views
+            document.getElementById('dashboard-view').classList.add('hidden-page');
+            document.getElementById('dashboard-view').classList.remove('visible-page');
+            document.getElementById('subpage-view').classList.remove('hidden-page');
+            document.getElementById('subpage-view').classList.add('visible-page');
+            window.scrollTo(0,0);
+        }
+
+        function openToolkitModal(toolKey) {
+            const tool = toolkitDetails[toolKey];
+            
+            // Generate list items
+            const stepsHtml = tool.steps.map(step => `<li class="mb-3 pl-2 border-l-2 border-amber-200">${step}</li>`).join('');
+
+            const content = `
+                <div class="animate-fade-in-up max-w-4xl mx-auto">
+                    <div class="text-center mb-10">
+                        <div class="text-6xl mb-4">${tool.icon}</div>
+                        <h2 class="text-4xl font-serif font-bold text-stone-900 mb-2">${tool.title}</h2>
+                        <div class="text-amber-700 font-medium">${tool.subtitle}</div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div class="bg-stone-50 p-8 rounded-xl border border-stone-200">
+                            <h3 class="text-xl font-bold text-stone-800 mb-4">Philosophy</h3>
+                            <p class="text-lg text-stone-700 leading-relaxed font-serif italic">"${tool.philosophy}"</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-xl font-bold text-stone-800 mb-4">Step-by-Step Protocol</h3>
+                                <ul class="text-stone-700 leading-relaxed">
+                                    ${stepsHtml}
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-stone-800 mb-4">Cognitive Science ("Why it Works")</h3>
+                                <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 text-blue-900">
+                                    ${tool.why}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
-        }
 
-        // 2. Chart Logic
-        function initCharts() {
-            // Data Processing
-            const categoryCounts = {};
-            const semesterLoad = {};
-
-            courses.forEach(c => {
-                // Category Sum
-                categoryCounts[c.cat] = (categoryCounts[c.cat] || 0) + c.sks;
-                // Semester Sum
-                semesterLoad[c.sem] = (semesterLoad[c.sem] || 0) + c.sks;
-            });
-
-            // Color Palette (Stone/Earth tones)
-            const catColors = ['#d6d3d1', '#a8a29e', '#78716c', '#b45309', '#d97706', '#f59e0b', '#fcd34d'];
+            document.getElementById('subpage-content').innerHTML = content;
             
-            // Chart 1: Categories (Donut)
-            const ctxCat = document.getElementById('categoryChart').getContext('2d');
-            new Chart(ctxCat, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(categoryCounts),
-                    datasets: [{
-                        data: Object.values(categoryCounts),
-                        backgroundColor: ['#e7e5e4', '#d6d3d1', '#f59e0b', '#78716c', '#a8a29e', '#fcd34d', '#b45309'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10 } } }
-                    }
-                }
-            });
-
-            // Chart 2: Semester Load (Bar)
-            const ctxSem = document.getElementById('semesterChart').getContext('2d');
-            new Chart(ctxSem, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(semesterLoad).map(k => `Sem ${k}`),
-                    datasets: [{
-                        label: 'SKS Load',
-                        data: Object.values(semesterLoad),
-                        backgroundColor: '#d6d3d1',
-                        hoverBackgroundColor: '#b45309',
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: { beginAtZero: true, grid: { display: false } },
-                        x: { grid: { display: false } }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
+            // Switch views
+            document.getElementById('dashboard-view').classList.add('hidden-page');
+            document.getElementById('dashboard-view').classList.remove('visible-page');
+            document.getElementById('subpage-view').classList.remove('hidden-page');
+            document.getElementById('subpage-view').classList.add('visible-page');
+            window.scrollTo(0,0);
         }
 
-        // 3. Filter Logic
+        // --- EXISTING LOGIC (Charts & Filters) ---
+        // (Kept largely the same but integrated with new modal triggers)
+
+        const phaseData = {
+            p1: { title: "Phase 1: Foundation", goal: "Achieve high proficiency.", twist: "You are the subject and the scientist.", actions: [{title:"Grammar in Context", desc:"Diagram sentences."}, {title:"Input/Output Loop", desc:"Shadowing audio."}, {title:"Early Academic Identity", desc:"Commonplace Book."}], bg: "bg-emerald-50", border: "border-emerald-200" },
+            p2: { title: "Phase 2: The Bridge", goal: "Know how to teach.", twist: "Synthesize Theory + Practice.", actions: [{title:"Linguistics-Pedagogy Link", desc:"Map concepts to teaching."}, {title:"Simulation Lab", desc:"Video analysis."}, {title:"ESP Analysis", desc:"Genre deconstruction."}], bg: "bg-amber-50", border: "border-amber-200" },
+            p3: { title: "Phase 3: The Scholar", goal: "Create knowledge.", twist: "Production over consumption.", actions: [{title:"Research Synthesis", desc:"Find gaps in theses."}, {title:"Tech Innovation", desc:"Critique apps via SLA."}, {title:"Translation", desc:"Cultural mediation."}], bg: "bg-indigo-50", border: "border-indigo-200" }
+        };
+
+        function switchPhase(phaseId) {
+            ['p1', 'p2', 'p3'].forEach(id => {
+                const btn = document.getElementById(`tab-${id}`);
+                btn.className = (id === phaseId) ? "active-tab pb-2 text-sm font-medium transition-colors focus:outline-none" : "inactive-tab pb-2 text-sm font-medium transition-colors focus:outline-none";
+            });
+            const data = phaseData[phaseId];
+            const actionsHTML = data.actions.map(a => `<div class="bg-white p-4 rounded-lg border border-stone-100 shadow-sm"><h5 class="font-bold text-stone-800 mb-2">${a.title}</h5><p class="text-sm text-stone-600">${a.desc}</p></div>`).join('');
+            document.getElementById('phase-content').innerHTML = `<div class="animate-fade-in-up"><div class="mb-6"><h4 class="text-xl font-bold text-stone-900">${data.title}</h4><p class="text-stone-600">${data.goal}</p><div class="mt-2 text-sm italic text-stone-500 border-l-2 border-stone-300 pl-3">${data.twist}</div></div><div class="grid grid-cols-1 md:grid-cols-3 gap-4">${actionsHTML}</div></div>`;
+        }
+
         function filterCourses() {
             const semVal = document.getElementById('semesterFilter').value;
             const catVal = document.getElementById('categoryFilter').value;
             const tbody = document.getElementById('courseTableBody');
-            
             tbody.innerHTML = '';
-
-            const filtered = courses.filter(c => {
-                const semMatch = semVal === 'all' || c.sem == semVal;
-                const catMatch = catVal === 'all' || c.cat === catVal;
-                return semMatch && catMatch;
-            });
+            
+            const filtered = courses.filter(c => (semVal === 'all' || c.sem == semVal) && (catVal === 'all' || c.cat === catVal));
 
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-stone-400">No courses match filters.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-stone-400">No courses match filters.</td></tr>';
                 return;
             }
 
-            filtered.forEach(c => {
-                // Color code category pill
+            filtered.forEach((c, index) => {
+                // Find original index for click handler
+                const originalIndex = courses.indexOf(c);
                 let badgeColor = "bg-stone-100 text-stone-600";
                 if(c.cat === 'Pedagogy') badgeColor = "bg-amber-100 text-amber-800";
                 if(c.cat === 'Linguistics') badgeColor = "bg-blue-50 text-blue-800";
                 if(c.cat === 'Skills') badgeColor = "bg-emerald-50 text-emerald-800";
 
                 const row = `
-                    <tr class="bg-white border-b hover:bg-stone-50 transition">
-                        <td class="px-6 py-4 font-medium">${c.sem}</td>
-                        <td class="px-6 py-4 text-xs font-mono text-stone-500">${c.code}</td>
-                        <td class="px-6 py-4 font-semibold text-stone-800">${c.name}</td>
+                    <tr onclick="openCourseModal(${originalIndex})" class="bg-white border-b hover:bg-stone-50 transition cursor-pointer group">
+                        <td class="px-6 py-4 font-medium text-stone-500">${c.sem}</td>
+                        <td class="px-6 py-4 text-xs font-mono text-stone-400 group-hover:text-amber-600">${c.code}</td>
+                        <td class="px-6 py-4 font-semibold text-stone-800 group-hover:text-amber-700">${c.name}</td>
                         <td class="px-6 py-4">${c.sks}</td>
                         <td class="px-6 py-4"><span class="${badgeColor} px-2 py-1 rounded text-xs font-bold">${c.cat}</span></td>
+                        <td class="px-6 py-4 text-stone-400 group-hover:text-amber-600">→</td>
                     </tr>
                 `;
                 tbody.innerHTML += row;
             });
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            switchPhase('p1'); // Load default phase
-            initCharts();      // Load charts
-            filterCourses();   // Load list
-        });
+        function initCharts() {
+            // Simplified chart init for brevity
+            const catC = {}; const semC = {};
+            courses.forEach(c => { catC[c.cat] = (catC[c.cat]||0)+c.sks; semC[c.sem] = (semC[c.sem]||0)+c.sks; });
+            
+            new Chart(document.getElementById('categoryChart'), {
+                type: 'doughnut',
+                data: { labels: Object.keys(catC), datasets: [{ data: Object.values(catC), backgroundColor: ['#e7e5e4', '#d6d3d1', '#f59e0b', '#78716c', '#a8a29e', '#fcd34d', '#b45309'], borderWidth: 0 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 10 } } } }
+            });
 
+            new Chart(document.getElementById('semesterChart'), {
+                type: 'bar',
+                data: { labels: Object.keys(semC).map(k=>`Sem ${k}`), datasets: [{ data: Object.values(semC), backgroundColor: '#d6d3d1', hoverBackgroundColor: '#b45309', borderRadius: 4 }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { display: false }, x: { grid: { display: false } } }, plugins: { legend: { display: false } } }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            switchPhase('p1');
+            initCharts();
+            filterCourses();
+        });
     </script>
 </body>
 </html>
